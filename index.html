@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Black Cap Store</title>
+    <style>
+        /* Modern Clean Look */
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .product-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            max-width: 340px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .product-container:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Image Styling */
+        .product-image {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            object-fit: cover; 
+            aspect-ratio: 1 / 1; 
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: #111;
+            margin: 10px 0;
+        }
+
+        p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .price-tag {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #111;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        /* The Buy Button */
+        .buy-btn {
+            background-color: #635bff; /* Stripe Blurple */
+            color: white;
+            text-decoration: none;
+            padding: 16px 0;
+            display: block;
+            width: 100%;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(99, 91, 255, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .buy-btn:hover {
+            background-color: #4b45c6;
+            box-shadow: 0 6px 16px rgba(99, 91, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="product-container">
+        <img src="hat.png" alt="Classic Black Cap" class="product-image">
+        
+        <h1>Classic Black Cap</h1>
+        
+        <p>Minimalist design. Maximum comfort. The only everyday hat you'll ever need.</p>
+        
+        <span class="price-tag">$25.00</span>
+
+        <a href="https://buy.stripe.com/test_fZu3cx9Uh15l0k4cQq73G00" class="buy-btn">
+            Buy Now
+        </a>
+    </div>
+
+</body>
+</html>
