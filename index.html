@@ -3,101 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Black Cap Store</title>
+    <title>Custom Hat Builder</title>
     <style>
-        /* Modern Clean Look */
         body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color: #f3f4f6;
+            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #f4f4f9;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
             margin: 0;
         }
 
-        .product-container {
+        .builder-container {
             background: white;
+            padding: 40px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            max-width: 340px;
-            padding: 25px;
-            text-align: center;
-            transition: transform 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 40px;
+            max-width: 800px;
+            width: 90%;
         }
 
-        .product-container:hover {
-            transform: translateY(-5px);
-        }
-
-        /* Image Styling */
-        .product-image {
-            width: 100%;
+        /* LEFT SIDE: The Visuals */
+        .preview-area {
+            position: relative; /* Critical for layering */
+            width: 400px;
+            height: 400px;
+            background-color: #eee;
             border-radius: 12px;
-            margin-bottom: 20px;
-            object-fit: cover; 
-            aspect-ratio: 1 / 1; 
         }
 
-        h1 {
-            font-size: 1.5rem;
-            color: #111;
-            margin: 10px 0;
-        }
-
-        p {
-            color: #666;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .price-tag {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #111;
-            margin-bottom: 25px;
-            display: block;
-        }
-
-        /* The Buy Button */
-        .buy-btn {
-            background-color: #635bff; /* Stripe Blurple */
-            color: white;
-            text-decoration: none;
-            padding: 16px 0;
-            display: block;
+        .hat-base {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1; /* Bottom layer */
+        }
+
+        .hat-patch {
+            width: 100px; /* Adjust based on your patch size */
+            height: 100px;
+            position: absolute;
+            top: 50%; /* Center the patch (adjust as needed) */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2; /* Top layer */
+            pointer-events: none; /* Lets clicks pass through */
+        }
+
+        /* RIGHT SIDE: The Controls */
+        .controls-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 { margin-top: 0; }
+        
+        label {
+            font-weight: bold;
+            margin-top: 20px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
             border-radius: 8px;
-            font-weight: 600;
+            border: 1px solid #ccc;
             font-size: 1rem;
-            box-shadow: 0 4px 12px rgba(99, 91, 255, 0.3);
-            transition: all 0.2s ease;
         }
 
-        .buy-btn:hover {
-            background-color: #4b45c6;
-            box-shadow: 0 6px 16px rgba(99, 91, 255, 0.4);
-            transform: translateY(-1px);
+        .price-display {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 30px 0;
+            color: #333;
         }
 
+        .buy-btn {
+            background-color: #111;
+            color: white;
+            padding: 18px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: background 0.2s;
+        }
+
+        .buy-btn:hover { background-color: #444; }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .builder-container { flex-direction: column; }
+            .preview-area { width: 100%; height: 300px; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="product-container">
-        <img src="hat.png" alt="Classic Black Cap" class="product-image">
+<div class="builder-container">
+    
+    <div class="preview-area">
+        <img id="hat-image" src="hat-black.png" class="hat-base" alt="Hat Base">
         
-        <h1>Classic Black Cap</h1>
-        
-        <p>Minimalist design. Maximum comfort. The only everyday hat you'll ever need.</p>
-        
-        <span class="price-tag">$25.00</span>
-
-        <a href="https://buy.stripe.com/test_fZu3cx9Uh15l0k4cQq73G00" class="buy-btn">
-            Buy Now
-        </a>
+        <img id="patch-image" src="" class="hat-patch" style="display:none;" alt="Patch Overlay">
     </div>
+
+    <div class="controls-area">
+        <h1>Design Your Cap</h1>
+        
+        <label>1. Choose Color</label>
+        <select id="color-selector" onchange="updatePreview()">
+            <option value="black">Midnight Black</option>
+            <option value="blue">Royal Blue</option>
+            <option value="red">Cardinal Red</option>
+        </select>
+
+        <label>2. Choose Patch</label>
+        <select id="patch-selector" onchange="updatePreview()">
+            <option value="none">No Patch</option>
+            <option value="skull">Skull & Bones</option>
+            <option value="dragon">Gold Dragon</option>
+            <option value="tiger">Tiger Emblem</option>
+        </select>
+
+        <div class="price-display">$35.00</div>
+
+        <a id="stripe-link" href="#" class="buy-btn">Buy Now</a>
+        
+        <p style="font-size:0.8rem; color:#666; margin-top:10px;">
+            *Selected design will be sent to order details.
+        </p>
+    </div>
+
+</div>
+
+<script>
+    // --- CONFIGURATION ---
+    // 1. Paste your BASE Stripe Payment Link here:
+    const baseStripeUrl = "https://buy.stripe.com/test_fZu3cx9Uh15l0k4cQq73G00";
+
+    function updatePreview() {
+        // Get user selections
+        const color = document.getElementById('color-selector').value;
+        const patch = document.getElementById('patch-selector').value;
+
+        // 1. UPDATE IMAGE VISUALS
+        // Assumes your files are named 'hat-black.png', 'hat-blue.png' etc.
+        document.getElementById('hat-image').src = `hat-${color}.png`;
+
+        const patchImg = document.getElementById('patch-image');
+        if (patch === 'none') {
+            patchImg.style.display = 'none';
+        } else {
+            patchImg.style.display = 'block';
+            // Assumes your files are named 'patch-skull.png', 'patch-dragon.png'
+            patchImg.src = `patch-${patch}.png`;
+        }
+
+        // 2. GENERATE THE "SECRET" ORDER CODE
+        // We create a text string like: "Color:black|Patch:skull"
+        const orderDetails = `Color:${color}|Patch:${patch}`;
+
+        // 3. UPDATE THE STRIPE LINK
+        // We use 'client_reference_id' to pass this data to the Stripe Dashboard
+        const finalUrl = `${baseStripeUrl}?client_reference_id=${encodeURIComponent(orderDetails)}`;
+        
+        document.getElementById('stripe-link').href = finalUrl;
+        
+        // Debugging: Log to console to see what's happening
+        console.log("New Buy Link:", finalUrl);
+    }
+
+    // Run once on load to set defaults
+    updatePreview();
+</script>
 
 </body>
 </html>
