@@ -1,194 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Hat Builder</title>
-    <style>
-        body {
-            font-family: 'Helvetica Neue', sans-serif;
-            background-color: #f4f4f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Hat Builder</title>
+  <style>
+    body {
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
 
-        .builder-container {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            display: flex;
-            gap: 40px;
-            max-width: 800px;
-            width: 90%;
-        }
+    .builder-container {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      display: flex;
+      gap: 40px;
+      max-width: 800px;
+      width: 90%;
+    }
 
-        /* LEFT SIDE: The Visuals */
-        .preview-area {
-            position: relative; /* Critical for layering */
-            width: 400px;
-            height: 400px;
-            background-color: #eee;
-            border-radius: 12px;
-        }
+    /* LEFT SIDE: The Visuals */
+    .preview-area {
+      position: relative; /* Critical for layering */
+      width: 400px;
+      height: 400px;
+      background-color: #eee;
+      border-radius: 12px;
+    }
 
-        .hat-base {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 12px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1; /* Bottom layer */
-        }
+    .hat-base {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1; /* Bottom layer */
+    }
 
-        .hat-patch {
-            width: 100px; /* Adjust based on your patch size */
-            height: 100px;
-            position: absolute;
-            top: 50%; /* Center the patch (adjust as needed) */
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2; /* Top layer */
-            pointer-events: none; /* Lets clicks pass through */
-        }
+    .hat-patch {
+      width: 100px; /* Adjust based on your patch size */
+      height: 100px;
+      position: absolute;
+      top: 50%; /* Center the patch (adjust as needed) */
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2; /* Top layer */
+      pointer-events: none; /* Lets clicks pass through */
+    }
 
-        /* RIGHT SIDE: The Controls */
-        .controls-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+    /* RIGHT SIDE: The Controls */
+    .controls-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
-        h1 { margin-top: 0; }
-        
-        label {
-            font-weight: bold;
-            margin-top: 20px;
-            display: block;
-            margin-bottom: 8px;
-        }
+    h1 { margin-top: 0; }
 
-        select {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            font-size: 1rem;
-        }
+    label {
+      font-weight: bold;
+      margin-top: 20px;
+      display: block;
+      margin-bottom: 8px;
+    }
 
-        .price-display {
-            font-size: 2rem;
-            font-weight: bold;
-            margin: 30px 0;
-            color: #333;
-        }
+    select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
 
-        .buy-btn {
-            background-color: #111;
-            color: white;
-            padding: 18px;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 1.2rem;
-            transition: background 0.2s;
-        }
+    .price-display {
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 30px 0;
+      color: #333;
+    }
 
-        .buy-btn:hover { background-color: #444; }
+    .buy-btn {
+      background-color: #111;
+      color: white;
+      padding: 18px;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      transition: background 0.2s;
+    }
 
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .builder-container { flex-direction: column; }
-            .preview-area { width: 100%; height: 300px; }
-        }
-    </style>
+    .buy-btn:hover { background-color: #444; }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .builder-container { flex-direction: column; }
+      .preview-area { width: 100%; height: 300px; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="builder-container">
-    
+  <div class="builder-container">
+
     <div class="preview-area">
-        <img id="hat-image" src="hat-black.png" class="hat-base" alt="Hat Base">
-        
-        <img id="patch-image" src="" class="hat-patch" style="display:none;" alt="Patch Overlay">
+      <img id="hat-image" src="hat-black.png" class="hat-base" alt="Hat Base">
+      <img id="patch-image" src="" class="hat-patch" style="display:none;" alt="Patch Overlay">
     </div>
 
     <div class="controls-area">
-        <h1>Design Your Cap</h1>
-        
-        <label>1. Choose Color</label>
-        <select id="color-selector" onchange="updatePreview()">
-            <option value="black">Midnight Black</option>
-            <option value="blue">Royal Blue</option>
-            <option value="red">Cardinal Red</option>
-        </select>
+      <h1>Design Your Cap</h1>
 
-        <label>2. Choose Patch</label>
-        <select id="patch-selector" onchange="updatePreview()">
-            <option value="none">No Patch</option>
-            <option value="skull">Skull & Bones</option>
-            <option value="dragon">Gold Dragon</option>
-            <option value="tiger">Tiger Emblem</option>
-        </select>
+      <label>1. Choose Color</label>
+      <select id="color-selector" onchange="updatePreview()">
+        <option value="black">Midnight Black</option>
+        <option value="blue">Royal Blue</option>
+        <option value="red">Cardinal Red</option>
+      </select>
 
-        <div class="price-display">$35.00</div>
+      <label>2. Choose Patch</label>
+      <select id="patch-selector" onchange="updatePreview()">
+        <option value="none">No Patch</option>
+        <option value="skull">Skull & Bones</option>
+        <option value="dragon">Gold Dragon</option>
+        <option value="tiger">Tiger Emblem</option>
+      </select>
 
-        <a id="stripe-link" href="#" class="buy-btn">Buy Now</a>
-        
-        <p style="font-size:0.8rem; color:#666; margin-top:10px;">
-            *Selected design will be sent to order details.
-        </p>
+      <div class="price-display">$35.00</div>
+
+      <a id="stripe-link" href="#" class="buy-btn">Buy Now</a>
+
+      <p style="font-size:0.8rem; color:#666; margin-top:10px;">
+        *Selected design will be sent to order details.
+      </p>
     </div>
 
-</div>
+  </div>
 
-<script>
+  <script>
     // --- CONFIGURATION ---
-    // 1. Paste your BASE Stripe Payment Link here:
+    // Your Stripe Payment Link (base)
     const baseStripeUrl = "https://buy.stripe.com/test_fZu3cx9Uh15l0k4cQq73G00";
 
     function updatePreview() {
-        // Get user selections
-        const color = document.getElementById('color-selector').value;
-        const patch = document.getElementById('patch-selector').value;
+      // Get user selections
+      const color = document.getElementById('color-selector').value;
+      const patch = document.getElementById('patch-selector').value;
 
-        // 1. UPDATE IMAGE VISUALS
-        // Assumes your files are named 'hat-black.png', 'hat-blue.png' etc.
-        document.getElementById('hat-image').src = `hat-${color}.png`;
+      // 1. UPDATE IMAGE VISUALS
+      // Assumes your files are named 'hat-black.png', 'hat-blue.png' etc.
+      document.getElementById('hat-image').src = `hat-${color}.png`;
 
-        const patchImg = document.getElementById('patch-image');
-        if (patch === 'none') {
-            patchImg.style.display = 'none';
-        } else {
-            patchImg.style.display = 'block';
-            // Assumes your files are named 'patch-skull.png', 'patch-dragon.png'
-            patchImg.src = `patch-${patch}.png`;
-        }
+      const patchImg = document.getElementById('patch-image');
+      if (patch === 'none') {
+        patchImg.style.display = 'none';
+        patchImg.src = ""; // optional: clears old patch image
+      } else {
+        patchImg.style.display = 'block';
+        // Assumes your files are named 'patch-skull.png', 'patch-dragon.png'
+        patchImg.src = `patch-${patch}.png`;
+      }
 
-        // 2. GENERATE THE "SECRET" ORDER CODE
-        // We create a text string like: "Color:black|Patch:skull"
-        const orderDetails = `Color:${color}|Patch:${patch}`;
+      // 2. GENERATE THE "SECRET" ORDER CODE
+      // e.g. "Color:black|Patch:skull"
+      const orderDetails = `Color:${color}|Patch:${patch}`;
 
-        // 3. UPDATE THE STRIPE LINK
-        // We use 'client_reference_id' to pass this data to the Stripe Dashboard
-        const finalUrl = `${baseStripeUrl}?client_reference_id=${encodeURIComponent(orderDetails)}`;
-        
-        document.getElementById('stripe-link').href = finalUrl;
-        
-        // Debugging: Log to console to see what's happening
-        console.log("New Buy Link:", finalUrl);
+      // 3. UPDATE THE STRIPE LINK
+      // Pass data via client_reference_id (if your Stripe flow supports it)
+      const finalUrl = `${baseStripeUrl}?client_reference_id=${encodeURIComponent(orderDetails)}`;
+      document.getElementById('stripe-link').href = finalUrl;
+
+      // 4. SAVE CHOICES FOR THANK YOU PAGE
+      localStorage.setItem('finalColor', color);
+      localStorage.setItem('finalPatch', patch);
+      localStorage.setItem('finalOrderDetails', orderDetails);
+
+      console.log("New Buy Link:", finalUrl);
     }
 
     // Run once on load to set defaults
     updatePreview();
-</script>
+  </script>
 
 </body>
 </html>
